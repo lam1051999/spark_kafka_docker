@@ -1,0 +1,17 @@
+SPARK_VERSION=2.4.4
+HADOOP_VERSION=2.7
+
+docker build \
+  --platform=linux/arm64 \
+  --build-arg spark_version="${SPARK_VERSION}" \
+  --build-arg hadoop_version="${HADOOP_VERSION}" \
+  -f spark_cluster_base/Dockerfile \
+  -t spark-cluster-base .
+
+docker build \
+  -f spark_master/Dockerfile \
+  -t spark-master .
+
+docker build \
+  -f spark_worker/Dockerfile \
+  -t spark-worker .
