@@ -11,8 +11,9 @@ object DBtoHDFS {
     val hdfsPath = arguments.get("hdfsPath").get
     val driverClass = arguments.get("driverClass").get
     val queryStm = arguments.get("queryStm").get
+    val numPartitions = arguments.get("numPartitions").get
 
-    val APPLICATION_NAME = "db_to_hdfs"
+    val APPLICATION_NAME = "db_to_hdfs_snapshot"
 
     val sparkSession = SparkSession.builder()
       .master(appMaster)
@@ -28,10 +29,10 @@ object DBtoHDFS {
       .option("dbtable", dbTable)
       .load()
 
-    sqlDF.createOrReplaceTempView("tempViewForSnapshot")
-    val sqlDFView = sqlC.sql(queryStm)
+//    sqlDF.createOrReplaceTempView("tempViewForSnapshot")
+//    val sqlDFView = sqlC.sql(queryStm)
 
-//    sqlDFView.show(10, false)
-    sqlDFView.write.mode(SaveMode.Overwrite).parquet(hdfsPath)
+//    sqlDF.show(10, false)
+    sqlDF.write.mode(SaveMode.Overwrite).parquet(hdfsPath)
   }
 }

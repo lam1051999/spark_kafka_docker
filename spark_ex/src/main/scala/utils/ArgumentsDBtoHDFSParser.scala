@@ -2,7 +2,7 @@ package utils
 
 object ArgumentsDBtoHDFSParser {
 
-  case class Arguments(appMaster: String = "", jdbcUrl: String = "", dbTable: String = "", hdfsPath: String = "", driverClass: String = "", queryStm: String = "")
+  case class Arguments(appMaster: String = "", jdbcUrl: String = "", dbTable: String = "", hdfsPath: String = "", driverClass: String = "", queryStm: String = "", numPartitions: String = "")
 
   val parser = new scopt.OptionParser[Arguments]("Parsing application") {
     opt[String]("app-master").required()
@@ -28,6 +28,10 @@ object ArgumentsDBtoHDFSParser {
     opt[String]("query-stm").required()
       .valueName("")
       .action((value, arguments) => arguments.copy(queryStm = value))
+
+    opt[String]("num-partitions").required()
+      .valueName("")
+      .action((value, arguments) => arguments.copy(numPartitions = value))
   }
 
 
@@ -41,6 +45,7 @@ object ArgumentsDBtoHDFSParser {
     var hdfsPath: String = null
     var driverClass: String = null
     var queryStm: String = null
+    var numPartitions: String = null
 
     parser.parse(args, Arguments()) match {
       case Some(arguments) =>
@@ -50,6 +55,7 @@ object ArgumentsDBtoHDFSParser {
         hdfsPath = arguments.hdfsPath
         driverClass = arguments.driverClass
         queryStm = arguments.queryStm
+        numPartitions = arguments.numPartitions
       case None =>
         appMaster = args.apply(0)
         jdbcUrl = args.apply(1)
@@ -57,6 +63,7 @@ object ArgumentsDBtoHDFSParser {
         hdfsPath = args.apply(3)
         driverClass = args.apply(4)
         queryStm = args.apply(5)
+        numPartitions = args.apply(6)
     }
 
     arguments += ("appMaster" -> appMaster)
@@ -65,6 +72,7 @@ object ArgumentsDBtoHDFSParser {
     arguments += ("hdfsPath" -> hdfsPath)
     arguments += ("driverClass" -> driverClass)
     arguments += ("queryStm" -> queryStm)
+    arguments += ("numPartitions" -> numPartitions)
 
     return arguments
   }

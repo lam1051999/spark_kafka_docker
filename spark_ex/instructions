@@ -6,11 +6,12 @@ $SPARK_HOME/bin/spark-submit --jars $(echo /execution_files/dependency/*.jar | t
 
 # spark submit import with correct unicode character set
 /bin/spark-submit \
-  --name "db_to_hdfs" \
+  --name "db_to_hdfs_snapshot" \
   --deploy-mode cluster \
-  --executor-cores 1 \
+  --executor-cores 4 \
   --driver-memory 1G \
-  --executor-memory 1G \
+  --executor-memory 5G \
+  --num-executors 1 \
   --queue sync_jobs \
   --conf spark.cleaner.periodicGC.interval=2min \
   --conf spark.driver.maxResultSize=2g \
@@ -29,11 +30,14 @@ $SPARK_HOME/bin/spark-submit --jars $(echo /execution_files/dependency/*.jar | t
   --class com.tranlam.DBtoHDFS \
   /home/sync_etl/lamtt50/db_to_hdfs/spark_ex-1.0-SNAPSHOT.jar \
   --app-master yarn \
-  --jdbc-url 'jdbc:mysql://10.110.128.155:3306/iggamecenter?user=etl&password=UmR35x7ph8p7cD2!&zeroDateTimeBehavior=CONVERT_TO_NULL' \
-  --db-table iggamecenter.gifts \
-  --hdfs-path /user/sync_etl/transfer/ingest/iggamecenter/gifts \
-  --driver-class com.mysql.jdbc.Driver \
-  --query-stm 'SELECT id, name, handler, status, cast(settings as string) as settings, updated_at, created_at FROM tempViewForSnapshot'
+  --jdbc-url 'jdbc:mysql://10.110.97.180:3306/qc_tool?user=etl&password=nVTwZWcvuzUUh9aE^*^&zeroDateTimeBehavior=CONVERT_TO_NULL' \
+  --db-table "(SELECT * FROM qc_tool.cs_task_states WHERE created_at >= '2022-06-24' AND created_at  < '2022-06-29') AS mytable" \
+  --hdfs-path '/user/sync_etl/transfer/ingest/qc_tool/cs_task_states' \
+  --driver-class 'com.mysql.jdbc.Driver' \
+  --query-stm "SELECT * FROM tempViewForSnapshot LIMIT 10" \
+  --num-partitions 2
+
+  --query-stm 'SELECT id, task_id, state_id, user_id, data, created_at, updated_at FROM tempViewForSnapshot'
 
 # run multiple lines impala queries
 read -r -d '' CMD << EOM

@@ -19,8 +19,8 @@ import java.util.Properties;
 
 public class KafkaProducerExample {
     private final static String TOPIC = "personinformation";
-    private final static String BOOTSTRAP_SERVERS = "localhost:29092";
-    private final static String SCHEMA_REGISTRY_URL = "http://localhost:8081";
+    private final static String BOOTSTRAP_SERVERS = "10.110.81.178:9092,10.110.81.179:9092,10.110.81.180:9092";
+    private final static String SCHEMA_REGISTRY_URL = "http://10.110.81.178:8081";
     private final static String LOCAL_SCHEMA_PATH = "src/main/resources/person.avsc";
     private final static Schema schema;
 
@@ -49,15 +49,17 @@ public class KafkaProducerExample {
         Faker faker = new Faker();
 
         for (int i = 0; i < nPersons; i ++){
+            String id = faker.idNumber().valid();
             String firstName = faker.name().firstName();
             String nickName = faker.name().username();
             String lastName = faker.name().lastName();
             int age = faker.number().numberBetween(18, 90);
-            ArrayList<String> emails = new ArrayList<String>();
-            int nEmails = 3;
-            for(int k = 0; k < nEmails; k++){
-                emails.add(faker.internet().safeEmailAddress());
-            }
+//            ArrayList<String> emails = new ArrayList<String>();
+//            int nEmails = 3;
+//            for(int k = 0; k < nEmails; k++){
+//                emails.add(faker.internet().safeEmailAddress());
+//            }
+            String emails = faker.internet().safeEmailAddress();
             String areaCode = String.valueOf(faker.number().numberBetween(200, 500));
             String countryCode = String.valueOf(faker.number().numberBetween(80, 85));
             String prefix = String.valueOf(faker.number().numberBetween(400, 600));
@@ -72,6 +74,7 @@ public class KafkaProducerExample {
             StatusEnum status = StatusEnum.getRandomStatus();
 
             GenericRecord personInfo = new GenericData.Record(schema);
+            personInfo.put("id", id);
             personInfo.put("firstName", firstName);
             personInfo.put("nickName", nickName);
             personInfo.put("lastName", lastName);
