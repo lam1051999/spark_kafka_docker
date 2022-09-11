@@ -19,8 +19,8 @@ import java.util.Properties;
 
 public class KafkaProducerExample {
     private final static String TOPIC = "personinformation";
-    private final static String BOOTSTRAP_SERVERS = "10.110.81.178:9092,10.110.81.179:9092,10.110.81.180:9092";
-    private final static String SCHEMA_REGISTRY_URL = "http://10.110.81.178:8081";
+    private final static String BOOTSTRAP_SERVERS = "localhost:29092";
+    private final static String SCHEMA_REGISTRY_URL = "http://localhost:8081";
     private final static String LOCAL_SCHEMA_PATH = "src/main/resources/person.avsc";
     private final static Schema schema;
 
