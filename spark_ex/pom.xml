@@ -1,40 +1,32 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.tranlam</groupId>
-  <artifactId>spark_ex</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <name>${project.artifactId}</name>
-  <description>My wonderfull scala app</description>
-  <inceptionYear>2018</inceptionYear>
-  <licenses>
-    <license>
-      <name>My License</name>
-      <url>http://....</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
 
+  <groupId>com.ghtk.vn</groupId>
+  <artifactId>ssk</artifactId>
+  <version>1.0-SNAPSHOT</version>
   <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
+    <parquet.version>1.12.2</parquet.version>
+    <spark.version>3.3.0</spark.version>
+    <scala.version>2.12.11</scala.version>
+    <scala.version.major>2.12</scala.version.major>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <encoding>UTF-8</encoding>
-    <scala.version>2.11.12</scala.version>
-    <scala.compat.version>2.11</scala.compat.version>
-    <spark.version>2.4.4</spark.version>
-    <spec2.version>4.2.0</spec2.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
   </properties>
   <repositories>
-    <repository>
-        <id>confluent</id>
-        <name>Confluent</name>
-        <url>http://packages.confluent.io/maven/</url>
-        <releases>
-            <enabled>true</enabled>
-        </releases>
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
-    </repository>
+    <!--        <repository>-->
+    <!--            <id>confluent</id>-->
+    <!--            <name>Confluent</name>-->
+    <!--            <url>http://packages.confluent.io/maven/</url>-->
+    <!--            <releases>-->
+    <!--                <enabled>true</enabled>-->
+    <!--            </releases>-->
+    <!--            <snapshots>-->
+    <!--                <enabled>true</enabled>-->
+    <!--            </snapshots>-->
+    <!--        </repository>-->
     <repository>
       <id>maven</id>
       <name>Maven repo</name>
@@ -48,6 +40,72 @@
   </repositories>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.9.9</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.mjakubowski84</groupId>
+      <artifactId>parquet4s-core_2.12</artifactId>
+      <version>2.6.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version>3.0.3</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-compress -->
+
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client-api</artifactId>
+      <version>3.3.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-core_${scala.version.major}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala.version.major}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql-kafka-0-10_${scala.version.major}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-streaming-kafka-0-10_${scala.version.major}</artifactId>
+      <version>${spark.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-streaming_${scala.version.major}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-avro_${scala.version.major}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>io.confluent</groupId>
       <artifactId>kafka-avro-serializer</artifactId>
@@ -57,6 +115,46 @@
       <groupId>io.confluent</groupId>
       <artifactId>kafka-schema-registry-client</artifactId>
       <version>5.0.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-30 -->
+    <dependency>
+      <groupId>org.elasticsearch</groupId>
+      <artifactId>elasticsearch-spark-30_${scala.version.major}</artifactId>
+      <version>7.17.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <!--        <dependency>-->
+    <!--            <groupId>org.elasticsearch</groupId>-->
+    <!--            <artifactId>elasticsearch-spark-20_${scala.version.major}</artifactId>-->
+    <!--            <version>6.6.2</version>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.apache.kudu</groupId>-->
+    <!--            <artifactId>kudu-spark2_${scala.version.major}</artifactId>-->
+    <!--            <version>1.8.0</version>-->
+    <!--        </dependency>-->
+    <!-- https://mvnrepository.com/artifact/org.apache.kudu/kudu-spark3 -->
+    <dependency>
+      <groupId>org.apache.kudu</groupId>
+      <artifactId>kudu-spark3_${scala.version.major}</artifactId>
+      <version>1.15.0</version>
+    </dependency>
+    <dependency>
+      <groupId>vn.ghtk.bigdata</groupId>
+      <artifactId>ssk-jdbc</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/connect-api -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>connect-api</artifactId>
+      <version>2.4.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka_${scala.version.major}</artifactId>
+      <version>2.2.1</version>
     </dependency>
     <dependency>
       <groupId>io.confluent</groupId>
@@ -68,146 +166,141 @@
       <artifactId>common-config</artifactId>
       <version>5.0.0</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.28</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/io.confluent/kafka-connect-storage-common -->
     <dependency>
       <groupId>io.confluent</groupId>
       <artifactId>kafka-connect-storage-common</artifactId>
       <version>5.0.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/log4j/log4j -->
     <dependency>
-      <groupId>org.scala-lang</groupId>
-      <artifactId>scala-library</artifactId>
-      <version>${scala.version}</version>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.scalatest/scalatest -->
     <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-core_${scala.compat.version}</artifactId>
-      <version>${spark.version}</version>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_${scala.version.major}</artifactId>
+      <version>3.0.5</version>
+      <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-avro_2.11</artifactId>
-      <version>${spark.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming_2.11</artifactId>
-      <version>${spark.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
-      <version>${spark.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-sql_${scala.compat.version}</artifactId>
-      <version>${spark.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-sql-kafka-0-10_2.11</artifactId>
-      <version>${spark.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>42.3.3</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
     <dependency>
       <groupId>com.googlecode.json-simple</groupId>
       <artifactId>json-simple</artifactId>
       <version>1.1.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.9</version>
+      <scope>provided</scope>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/com.github.scopt/scopt -->
     <dependency>
       <groupId>com.github.scopt</groupId>
-      <artifactId>scopt_2.11</artifactId>
-      <version>3.3.0</version>
-    </dependency>
-    <!-- Test -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
+      <artifactId>scopt_${scala.version.major}</artifactId>
+      <version>4.0.1</version>
     </dependency>
     <dependency>
-      <groupId>org.scalatest</groupId>
-      <artifactId>scalatest_${scala.compat.version}</artifactId>
-      <version>3.0.5</version>
-      <scope>test</scope>
+      <groupId>org.apache.parquet</groupId>
+      <artifactId>parquet-avro</artifactId>
+      <version>${parquet.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.specs2</groupId>
-      <artifactId>specs2-core_${scala.compat.version}</artifactId>
-      <version>${spec2.version}</version>
-      <scope>test</scope>
+      <groupId>org.apache.parquet</groupId>
+      <artifactId>parquet-hadoop</artifactId>
+      <version>${parquet.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.specs2</groupId>
-      <artifactId>specs2-junit_${scala.compat.version}</artifactId>
-      <version>${spec2.version}</version>
-      <scope>test</scope>
+      <groupId>org.apache.parquet</groupId>
+      <artifactId>parquet-column</artifactId>
+      <version>${parquet.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.parquet</groupId>
+      <artifactId>parquet-common</artifactId>
+      <version>${parquet.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.parquet</groupId>
+      <artifactId>parquet-encoding</artifactId>
+      <version>${parquet.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mongodb.spark</groupId>
+      <artifactId>mongo-spark-connector_${scala.version.major}</artifactId>
+      <version>2.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json4s</groupId>
+      <artifactId>json4s-native_2.11</artifactId>
+      <version>3.5.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.alexandrnikitin</groupId>
+      <artifactId>bloom-filter_2.11</artifactId>
+      <version>0.13.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version>3.0.3</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>tech.allegro.schema.json2avro</groupId>
+      <artifactId>converter</artifactId>
+      <version>0.2.2</version>
     </dependency>
   </dependencies>
-
   <build>
-    <sourceDirectory>src/main/scala</sourceDirectory>
-    <testSourceDirectory>src/test/scala</testSourceDirectory>
     <plugins>
       <plugin>
-        <!-- see http://davidb.github.com/scala-maven-plugin -->
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <version>3.3.2</version>
+        <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
+            <phase>install</phase>
             <goals>
-              <goal>compile</goal>
-              <goal>testCompile</goal>
+              <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <args>
-                <arg>-dependencyfile</arg>
-                <arg>${project.build.directory}/.scala_dependencies</arg>
-              </args>
+              <excludeScope>provided</excludeScope>
+              <outputDirectory>${project.build.directory}/lib</outputDirectory>
+              <!--<excludeScope>compile</excludeScope>-->
             </configuration>
           </execution>
         </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.21.0</version>
+        <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <!-- Tests will be run with scalatest-maven-plugin instead -->
-          <skipTests>true</skipTests>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.scalatest</groupId>
-        <artifactId>scalatest-maven-plugin</artifactId>
-        <version>2.0.0</version>
-        <configuration>
-          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-          <junitxml>.</junitxml>
-          <filereports>TestSuiteReport.txt</filereports>
-          <!-- Comma separated list of JUnit test class names to execute -->
-          <jUnitClasses>samples.AppTest</jUnitClasses>
-        </configuration>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>3.2.2</version>
         <executions>
           <execution>
-            <id>test</id>
+            <id>scala-compile-first</id>
+            <phase>process-resources</phase>
             <goals>
-              <goal>test</goal>
+              <goal>add-source</goal>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>scala-test-compile</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>testCompile</goal>
             </goals>
           </execution>
         </executions>
@@ -215,3 +308,4 @@
     </plugins>
   </build>
 </project>
+

@@ -28,7 +28,7 @@ object DataTypeUtils {
       case ENUM => SchemaType(StringType, nullable = false)
       case RECORD =>
         if (existingRecordNames.contains(avroSchema.getFullName)) {
-          throw new IncompatibleSchemaException(
+          throw new Exception(
             s"""
                |Found recursive reference in Avro schema, which can not be processed by Spark:
                |${avroSchema.toString(true)}
@@ -84,7 +84,7 @@ object DataTypeUtils {
             SchemaType(StructType(fields), nullable = false)
         }
 
-      case other => throw new IncompatibleSchemaException(s"Unsupported type $other")
+      case other => throw new Exception(s"Unsupported type $other")
     }
   }
 }
